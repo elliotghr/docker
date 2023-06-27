@@ -1,0 +1,29 @@
+version: "3.9"
+services:
+  chanchito:
+    build:
+      # Agregamos la propiedad de context y pasamos la ruta donde se encuentra la aplicación
+      context: .
+      #  Le especificamos que la imagen la debe construir pero con el archivo de Dockerfile.dev
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    links:
+      - monguito
+    # Configuramos un volume anónimo para esta imagen
+    volumes:
+      - .:/home/app
+  monguito:
+    image: mongo
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=nico
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    volumes:
+      - mongo-data:/data/db
+      # mysql -> /var/lib/mysql
+      # postgres -> /var/lib/postgresql/data
+
+volumes:
+  mongo-data:

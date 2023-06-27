@@ -1,0 +1,14 @@
+FROM node:18
+
+#Agregamos nodemon que detectará los cambios
+RUN npm i -g nodemon
+RUN mkdir -p /home/app
+
+# Agregamos la ruta con WORKDIR
+WORKDIR /home/app
+
+# No necesitamos la linea de COPY
+EXPOSE 3000
+
+# Gracias workdir ya solo especificamos el nombre del archivo
+CMD ["nodemon", "index.js"]

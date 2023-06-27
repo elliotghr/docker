@@ -1,0 +1,34 @@
+# Especificacmos la versión
+version: "3.9"
+# Especificamos los contenedores
+services:
+  chanchito:
+    # Especificamos la ruta del build
+    build: .
+    # Especificamos el port mapping
+    ports:
+      - "3000:3000"
+    # Indicamos el nombre del contenedor a mapear
+    links:
+      - monguito
+  monguito:
+    # Especificamos la imagen
+    image: mongo
+    # Especificamos el port mapping
+    ports:
+      - "27017:27017"
+    # Especificamos las variables de entorno
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=nico
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    # Agregamos la propiedad volumes
+    # Primero definimos volumes de manera general y posteriormente lo hacemos por container
+    volumes:
+      # Agreamos el nombre del volume y la ruta dentro del contenedor donde estará el volumen de mongo-data
+      - mongo-data:/data/db
+      # mysql -> /var/lib/mysql
+      # postgres -> /var/lib/postgresql/data
+# Definimos volumes que hace referencia a todos nuestros contenedores
+volumes:
+  # Escribimos el nombre
+  mongo-data:
